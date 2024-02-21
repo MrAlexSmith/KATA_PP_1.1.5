@@ -1,21 +1,12 @@
 package jm.task.core.jdbc.model;
 
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-
-@Table
 public class User {
-    @Id
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
     private String lastName;
 
-    @Column
     private Byte age;
 
     public User() {
