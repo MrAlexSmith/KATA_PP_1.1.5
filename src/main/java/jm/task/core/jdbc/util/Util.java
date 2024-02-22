@@ -25,13 +25,13 @@ public final class Util {
                     Property.get(URL_KEY),
                     Property.get(USERNAME_KEY),
                     Property.get(PASSWORD_KEY));
-        } catch (SQLException exception) {
+        } catch (SQLException | RuntimeException exception) {
             throw new RuntimeException(exception);
         }
     }
 
     // The method created for support of legacy JDK (early JDK 8)
-    private static void loadDriver() {
+    private static void loadDriver() throws RuntimeException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException exception) {

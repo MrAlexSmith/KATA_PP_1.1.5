@@ -22,7 +22,7 @@ public final class Property {
 
     private static void loadProperties() {
         try (InputStream inputStream = Files.newInputStream(
-                Paths.get("application.properties"))) {
+                Paths.get("resources/application.properties"))) {
             PROPERTIES.load(inputStream);
         } catch (IOException exception) {
             throw new RuntimeException(exception);
