@@ -53,11 +53,17 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\nUser{")
+                     .append("id=")
+                     .append(id)
+                     .append(" name='")
+                     .append(name)
+                     .append('\'')
+                     .append(" lastName='")
+                     .append(lastName)
+                     .append('\'')
+                     .append(" age=").append(age).append("}");
+        return stringBuilder.toString();
     }
 }

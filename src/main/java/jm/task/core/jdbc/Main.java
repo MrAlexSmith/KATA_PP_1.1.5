@@ -22,11 +22,11 @@ public class Main {
         userService.createUsersTable();
 
         for (User user : userList) {
-            userService.saveUser(user.getName()
-                               , user.getLastName()
-                               , user.getAge());
-            System.out.printf("User с именем — %s добавлен в базу данных\n"
-                             , user.getName());
+            userService.saveUser(user.getName(),
+                                 user.getLastName(),
+                                 user.getAge());
+            System.out.printf("User с именем — %s добавлен в базу данных\n",
+                    user.getName());
         }
 
         System.out.println(userService.getAllUsers());
