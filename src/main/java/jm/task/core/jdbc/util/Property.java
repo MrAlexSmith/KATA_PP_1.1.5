@@ -1,5 +1,7 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.exception.DaoException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -25,7 +27,7 @@ public final class Property {
                 Paths.get("resources/application.properties"))) {
             PROPERTIES.load(inputStream);
         } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            throw new DaoException(exception);
         }
     }
 }

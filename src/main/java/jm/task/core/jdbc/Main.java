@@ -17,7 +17,7 @@ public class Main {
         userList.add(new User("David", "Johnson" , (byte) 35));
         userList.add(new User("Sarah", "Williams", (byte) 28));
 
-        UserService userService = new UserServiceImpl();
+        UserService userService = UserServiceImpl.getInstance();
 
         userService.createUsersTable();
 

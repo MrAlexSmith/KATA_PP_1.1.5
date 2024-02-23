@@ -11,7 +11,6 @@ public final class Util {
     private static final String PASSWORD_KEY = "db.password";
 
     private Util() {
-
     }
 
     public static Connection getConnection() throws SQLException, RuntimeException {

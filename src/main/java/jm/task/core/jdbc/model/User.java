@@ -2,11 +2,8 @@ package jm.task.core.jdbc.model;
 
 public class User {
     private Long id;
-
     private String name;
-
     private String lastName;
-
     private Byte age;
 
     public User() {
