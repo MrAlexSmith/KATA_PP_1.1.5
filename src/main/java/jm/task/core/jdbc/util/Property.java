@@ -20,7 +20,7 @@ public final class Property {
         return PROPERTIES.getProperty(stringKey);
     }
 
-    private static void loadProperties() {
+    private static void loadProperties() throws RuntimeException {
         try (InputStream inputStream = Files.newInputStream(
                 Paths.get("resources/application.properties"))) {
             PROPERTIES.load(inputStream);
