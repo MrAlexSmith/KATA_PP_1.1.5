@@ -1,19 +1,44 @@
 package jm.task.core.jdbc.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users", schema = "public")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String lastName;
     private Byte age;
 
     public User() {
-
     }
 
     public User(String name, String lastName, Byte age) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\nUser{")
+                     .append("id=")
+                     .append(id)
+                     .append(" name='")
+                     .append(name)
+                     .append('\'')
+                     .append(" lastName='")
+                     .append(lastName)
+                     .append('\'')
+                     .append(" age=").append(age).append("}");
+        return stringBuilder.toString();
     }
 
     public Long getId() {
@@ -46,21 +71,5 @@ public class User {
 
     public void setAge(Byte age) {
         this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\nUser{")
-                     .append("id=")
-                     .append(id)
-                     .append(" name='")
-                     .append(name)
-                     .append('\'')
-                     .append(" lastName='")
-                     .append(lastName)
-                     .append('\'')
-                     .append(" age=").append(age).append("}");
-        return stringBuilder.toString();
     }
 }
