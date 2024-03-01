@@ -24,7 +24,7 @@ public final class Property {
 
     private static void loadProperties() throws RuntimeException {
         try (InputStream inputStream = Files.newInputStream(
-                Paths.get("resources/application.properties"))) {
+                Paths.get("src/main/resources/application.properties"))) {
             PROPERTIES.load(inputStream);
         } catch (IOException exception) {
             throw new DaoException(exception);
