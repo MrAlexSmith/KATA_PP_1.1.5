@@ -83,7 +83,7 @@ public class UserDaoJDBCImpl implements UserDao {
             while (resultSet.next()) {
                 User user = new User(
                         resultSet.getString("name"),
-                        resultSet.getString("lastName"),
+                        resultSet.getString("last_name"),
                         resultSet.getByte("age"));
                 user.setId(resultSet.getLong("id"));
                 userList.add(user);
@@ -97,7 +97,8 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()) {
+             Statement statement = connection.createStatement()
+        ) {
             statement.executeUpdate(SqlString.CLEAN_USERS_TABLE_SQL);
         } catch (SQLException exception) {
             throw new DaoException(exception);

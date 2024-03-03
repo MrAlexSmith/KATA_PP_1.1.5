@@ -3,6 +3,7 @@ package jm.task.core.jdbc.util;
 public final class SqlString {
     public static final String CREATE_USERS_TABLE_MySQL;
     public static final String CREATE_USERS_TABLE_PostgreSQL;
+    public static final String GET_ALL_USERS_HQL;
     public static final String DROP_USERS_TABLE_SQL;
     public static final String SAVE_USER_SQL;
     public static final String REMOVE_USER_BY_ID_SQL;
@@ -15,10 +16,10 @@ public final class SqlString {
         CREATE_USERS_TABLE_MySQL = """
                 CREATE TABLE IF NOT EXISTS users
                 (
-                    id       INT PRIMARY KEY AUTO_INCREMENT,
-                    name     VARCHAR(45) NOT NULL,
-                    lastName VARCHAR(45) NOT NULL,
-                    age      TINYINT     NOT NULL
+                    id        INT PRIMARY KEY AUTO_INCREMENT,
+                    name      VARCHAR(45) NOT NULL,
+                    last_name VARCHAR(45) NOT NULL,
+                    age       TINYINT     NOT NULL
                 )
                 """;
 
@@ -26,11 +27,16 @@ public final class SqlString {
         CREATE_USERS_TABLE_PostgreSQL = """
                 CREATE TABLE IF NOT EXISTS users
                 (
-                    id       BIGSERIAL   PRIMARY KEY,
-                    name     VARCHAR(45) NOT NULL,
-                    lastName VARCHAR(45) NOT NULL,
-                    age      SMALLINT    NOT NULL
+                    id        BIGSERIAL   PRIMARY KEY,
+                    name      VARCHAR(45) NOT NULL,
+                    last_name VARCHAR(45) NOT NULL,
+                    age       SMALLINT    NOT NULL
                 )
+                """;
+
+        // Hibernate HQL
+        GET_ALL_USERS_HQL = """
+                select user from User user
                 """;
 
         // Generic SQL
@@ -38,8 +44,9 @@ public final class SqlString {
                 DROP TABLE IF EXISTS users
                 """;
         SAVE_USER_SQL = """
-                INSERT INTO users (
-                    name, lastName, age
+                INSERT INTO users
+                (
+                    name, last_name, age
                 ) VALUES (?,?,?)
                 """;
         REMOVE_USER_BY_ID_SQL = """
@@ -50,7 +57,7 @@ public final class SqlString {
                 SELECT
                     id,
                     name,
-                    lastName,
+                    last_name,
                     age
                 FROM users
                 """;
