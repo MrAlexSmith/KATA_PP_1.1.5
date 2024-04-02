@@ -7,13 +7,21 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.SqlString;
 import jm.task.core.jdbc.util.Util;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
     private static final UserDaoHibernateImpl INSTANCE =
             new UserDaoHibernateImpl();
-    private static final EntityManagerFactory entityManagerFactory =
-            Util.getEntityManagerFactory();
+    private static final EntityManagerFactory entityManagerFactory;
+
+    static {
+        try {
+            entityManagerFactory = Util.getEntityManagerFactory();
+        } catch (Exception exception) {
+            throw new DaoException(exception);
+        }
+    }
 
     public UserDaoHibernateImpl() {
     }
@@ -98,6 +106,16 @@ public class UserDaoHibernateImpl implements UserDao {
             entityManager.getTransaction().commit();
         } catch (Exception exception) {
             throw new DaoException(exception);
+        }
+    }
+
+    public void closeEntityManagerFactory() {
+        if (entityManagerFactory != null) {
+            try {
+                entityManagerFactory.close();
+            } catch (Exception exception) {
+                throw new DaoException(exception);
+            }
         }
     }
 }

@@ -15,6 +15,15 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     private static final UserDaoJDBCImpl INSTANCE = new UserDaoJDBCImpl();
+    private static final Connection connection;
+
+    static {
+        try {
+            connection = Util.getConnection();
+        } catch (SQLException exception) {
+            throw new DaoException(exception);
+        }
+    }
 
     private UserDaoJDBCImpl() {}
 
@@ -24,8 +33,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()
+        try (Statement statement = connection.createStatement()
         ) {
             statement.executeUpdate(SqlString.CREATE_USERS_TABLE_MySQL);
         } catch (SQLException exception) {
@@ -35,8 +43,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void dropUsersTable() {
-        try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()
+        try (Statement statement = connection.createStatement()
         ) {
             statement.executeUpdate(SqlString.DROP_USERS_TABLE_SQL);
         } catch (SQLException exception) {
@@ -46,9 +53,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        try (Connection connection = Util.getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement(SqlString.SAVE_USER_SQL)
+        try (PreparedStatement statement = connection
+                .prepareStatement(SqlString.SAVE_USER_SQL)
         ) {
             statement.setString(1, name);
             statement.setString(2, lastName);
@@ -61,9 +67,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        try (Connection connection = Util.getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement(SqlString.REMOVE_USER_BY_ID_SQL)
+        try (PreparedStatement statement = connection
+                .prepareStatement(SqlString.REMOVE_USER_BY_ID_SQL)
         ) {
             statement.setLong(1, id);
             statement.executeUpdate();
@@ -75,9 +80,8 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        try (Connection connection = Util.getConnection();
-             PreparedStatement statement = connection
-                     .prepareStatement(SqlString.GET_ALL_USERS_SQL);
+        try (PreparedStatement statement = connection
+                .prepareStatement(SqlString.GET_ALL_USERS_SQL);
              ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
@@ -96,12 +100,21 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()
+        try (Statement statement = connection.createStatement()
         ) {
             statement.executeUpdate(SqlString.CLEAN_USERS_TABLE_SQL);
         } catch (SQLException exception) {
             throw new DaoException(exception);
+        }
+    }
+
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException exception) {
+                throw new DaoException(exception);
+            }
         }
     }
 }
